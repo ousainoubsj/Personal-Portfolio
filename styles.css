@@ -1,5 +1,4 @@
 :root {
-    /* Color Palette - Light Theme (Default) */
     --bg: #ffffff;
     --surface: #f8f9fa;
     --text: #1a1a1a;
@@ -11,70 +10,44 @@
     --shadow: rgba(0, 0, 0, 0.1);
     --shadow-strong: rgba(0, 0, 0, 0.2);
 
-    /* Spacing Scale */
     --space-xs: 0.5rem;
-    /* 8px */
     --space-sm: 1rem;
-    /* 16px */
     --space-md: 1.5rem;
-    /* 24px */
     --space-lg: 2rem;
-    /* 32px */
     --space-xl: 3rem;
-    /* 48px */
     --space-2xl: 4rem;
-    /* 64px */
     --space-3xl: 6rem;
-    /* 96px */
 
-    /* Typography */
     --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-size-sm: 0.875rem;
-    /* 14px */
     --font-size-base: 1rem;
-    /* 16px */
     --font-size-lg: 1.125rem;
-    /* 18px */
     --font-size-xl: 1.25rem;
-    /* 20px */
     --font-size-2xl: 1.5rem;
-    /* 24px */
     --font-size-3xl: 1.875rem;
-    /* 30px */
     --font-size-4xl: 2.25rem;
-    /* 36px */
     --font-size-5xl: 3rem;
-    /* 48px */
     --line-height-tight: 1.2;
     --line-height-normal: 1.6;
     --line-height-relaxed: 1.8;
 
-    /* Border Radius */
     --radius-sm: 0.375rem;
-    /* 6px */
     --radius-md: 0.5rem;
-    /* 8px */
     --radius-lg: 0.75rem;
-    /* 12px */
     --radius-xl: 1rem;
-    /* 16px */
     --radius-full: 9999px;
 
-    /* Transitions */
     --transition-fast: 150ms ease;
     --transition-base: 250ms ease;
     --transition-slow: 350ms ease;
 
-    /* Layout */
     --max-width: 1400px;
     --header-height: 50px;
 }
 
 
-/* ============================================================================
-   2. BASE & RESET STYLES
-   ========================================================================= */
+/* Base Styles */
 
 *,
 *::before,
@@ -98,7 +71,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Respect user motion preferences */
 @media (prefers-reduced-motion: reduce) {
 
     *,
@@ -112,9 +84,7 @@ body {
 }
 
 
-/* ============================================================================
-   3. TYPOGRAPHY
-   ========================================================================= */
+/* Typography */
 
 h1,
 h2,
@@ -167,7 +137,6 @@ a:hover {
     color: var(--accent-strong);
 }
 
-/* Focus styles for accessibility */
 a:focus,
 button:focus,
 input:focus,
@@ -187,9 +156,7 @@ a:focus-visible {
 }
 
 
-/* ============================================================================
-   4. LAYOUT & GRID SYSTEM
-   ========================================================================= */
+/* Layout */
 
 .container {
     width: 100%;
@@ -222,12 +189,7 @@ section {
 }
 
 
-/* ============================================================================
-   5. COMPONENTS (BEM Methodology)
-   ========================================================================= */
-
-/* Skip Link
-   ========================================================================= */
+/* Skip Link */
 
 .skip-link {
     position: absolute;
@@ -248,8 +210,7 @@ section {
 }
 
 
-/* Header & Navigation
-   ========================================================================= */
+/* Header & Navigation */
 
 .header {
     position: sticky;
@@ -268,9 +229,38 @@ section {
     border: 1px solid var(--border);
     border-radius: var(--radius-full);
     box-shadow: 0 4px 12px var(--shadow);
+    position: relative;
 }
 
-/* Logo */
+/* CSS-only burger menu using checkbox hack */
+.nav__toggle {
+    display: none;
+}
+
+.nav__burger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 100;
+}
+
+.nav__burger span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text);
+    border-radius: 3px;
+    transition: all var(--transition-base);
+}
+
+.nav__menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    flex: 1;
+}
+
 .nav__logo {
     display: flex;
     align-items: center;
@@ -291,13 +281,12 @@ section {
     color: var(--accent-strong);
 }
 
-/* Navigation Links */
 .nav__list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: var(--space-sm);
+    gap: var(--space-xs);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -322,7 +311,6 @@ section {
     color: var(--accent);
 }
 
-/* Contact Button */
 .nav__contact-btn {
     display: inline-block;
     padding: var(--space-xs) var(--space-lg);
@@ -342,27 +330,156 @@ section {
     transform: translateY(-1px);
 }
 
-/* Mobile Navigation */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .nav {
+        border-radius: var(--radius-xl);
+        padding: var(--space-sm);
+    }
+
+    .nav__burger {
+        display: flex;
+    }
+
+    .nav__menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        margin-top: var(--space-sm);
+        padding: var(--space-md);
         flex-direction: column;
         gap: var(--space-md);
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all var(--transition-base);
+        box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .nav__toggle:checked~.nav__menu {
+        max-height: 500px;
+        opacity: 1;
+    }
+
+    .nav__toggle:checked~.nav__burger span:first-child {
+        transform: rotate(45deg) translate(7px, 7px);
+    }
+
+    .nav__toggle:checked~.nav__burger span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .nav__toggle:checked~.nav__burger span:last-child {
+        transform: rotate(-45deg) translate(7px, -7px);
     }
 
     .nav__list {
         flex-direction: column;
         width: 100%;
+        gap: var(--space-xs);
     }
 
     .nav__link {
         width: 100%;
         text-align: center;
+        padding: var(--space-sm);
+    }
+
+    .nav__contact-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .hero__image-container {
+        max-width: 320px;
+    }
+
+    .hero__image {
+        width: 280px;
+        height: 280px;
+    }
+
+    .hero__grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero__visual {
+        order: 1;
+    }
+
+    .hero__content {
+        text-align: center;
+        order: 2;
+    }
+
+    .hero__cta {
+        justify-content: center;
+    }
+
+    .hero__stats {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--space-md) !important;
+        width: 100%;
+        justify-content: unset;
+    }
+
+    .stat {
+        align-items: center;
+    }
+
+    .hero {
+        margin-top: var(--space-xl);
+    }
+}
+
+@media (max-width: 480px) {
+    .highlights-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero__title {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+
+    .hero__stats {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--space-md) !important;
+        width: 100%;
+        justify-content: unset;
+    }
+
+    .stat {
+        align-items: center;
+    }
+
+    .hero__image-container {
+        max-width: 280px;
+    }
+
+    .hero__image {
+        width: 240px;
+        height: 240px;
+    }
+
+    .header {
+        padding: 0;
+    }
+
+    .nav {
+        padding: var(--space-xs);
     }
 }
 
 
-/* Hero Section
-   ========================================================================= */
+/* Hero Section */
 
 .hero {
     background: var(--bg);
@@ -464,7 +581,6 @@ section {
     z-index: 2;
 }
 
-/* Icon Images Around Hero Circle */
 .hero__icon {
     position: absolute;
     width: 50px;
@@ -490,7 +606,6 @@ section {
     object-fit: contain;
 }
 
-/* Position icons around the circle */
 .hero__icon--1 {
     top: 10%;
     right: 5%;
@@ -511,7 +626,6 @@ section {
     right: 5%;
 }
 
-/* Mobile adjustments */
 @media (max-width: 767px) {
     .hero__icon {
         width: 40px;
@@ -526,8 +640,7 @@ section {
 
 
 
-/* Buttons
-   ========================================================================= */
+/* Buttons */
 
 .btn {
     display: inline-block;
@@ -571,12 +684,11 @@ section {
 }
 
 
-/* About Section
-   ========================================================================= */
+/* About Section */
 
 .about {
     background-color: var(--bg);
-    padding-top: var(--space-xs);
+    padding-top: 0;
 }
 
 .about .section-title {
@@ -684,8 +796,7 @@ section {
 }
 
 
-/* Projects Section
-   ========================================================================= */
+/* Projects Section */
 
 .projects {
     background-color: var(--bg);
@@ -826,8 +937,7 @@ section {
 }
 
 
-/* Skills Section
-   ========================================================================= */
+/* Skills Section */
 
 .skills {
     background-color: var(--bg);
@@ -909,6 +1019,7 @@ section {
     border-radius: var(--radius-full);
     border: 1px solid var(--border);
     transition: all var(--transition-fast);
+    cursor: pointer;
 }
 
 .skill-tag:hover {
@@ -919,8 +1030,7 @@ section {
 }
 
 
-/* Experience Section
-   ========================================================================= */
+/* Experience Section */
 
 .experience {
     background-color: var(--bg);
@@ -1006,8 +1116,7 @@ section {
 }
 
 
-/* Contact Section
-   ========================================================================= */
+/* Contact Section */
 
 .contact {
     background-color: var(--bg);
@@ -1037,11 +1146,11 @@ section {
     align-items: center;
     justify-content: center;
     gap: var(--space-md);
-    padding: var(--space-sm);
+    padding: var(--space-xs);
     background-color: var(--surface);
     border-radius: var(--radius-lg);
     color: var(--text);
-    font-weight: 500;
+    font-weight: 400;
     transition: all var(--transition-base);
     border: 2px solid transparent;
 }
@@ -1061,11 +1170,10 @@ section {
 }
 
 
-/* Footer
-   ========================================================================= */
+/* Footer */
 
 .footer {
-    background-color: var(--surface);
+    background-color: var(--bg);
     padding: var(--space-xl) 0;
     border-top: 1px solid var(--border);
 }
@@ -1101,9 +1209,7 @@ section {
 }
 
 
-/* ============================================================================
-   6. ANIMATIONS
-   ========================================================================= */
+/* Animations */
 
 @keyframes fadeIn {
     from {
@@ -1141,15 +1247,10 @@ section {
 
 
 
-/* ============================================================================
-   7. RESPONSIVE DESIGN (MOBILE-FIRST)
-   ========================================================================= */
-
-/* Tablet (768px and up) */
+/* Responsive Design */
 @media (min-width: 768px) {
     :root {
         --font-size-5xl: 3.75rem;
-        /* 60px */
     }
 
     .container {
@@ -1235,9 +1336,7 @@ section {
 
 
 
-/* ============================================================================
-   8. DARK MODE SUPPORT (prefers-color-scheme)
-   ========================================================================= */
+/* Dark Mode */
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -1272,13 +1371,10 @@ section {
 }
 
 
-/* ============================================================================
-   9. PRINT STYLES (RESUME-FRIENDLY)
-   ========================================================================= */
+/* Print Styles */
 
 @media print {
 
-    /* Reset for print */
     * {
         background: transparent !important;
         color: #000 !important;
@@ -1291,7 +1387,6 @@ section {
         line-height: 1.4;
     }
 
-    /* Hide non-essential elements */
     .header,
     .skip-link,
     .hero__cta,
@@ -1301,7 +1396,6 @@ section {
         display: none !important;
     }
 
-    /* Adjust spacing for print */
     section {
         padding: 1rem 0;
         page-break-inside: avoid;
@@ -1338,7 +1432,6 @@ section {
         display: none;
     }
 
-    /* Compact layouts */
     .about__content {
         display: block;
     }
@@ -1373,7 +1466,6 @@ section {
         margin-bottom: 0.5rem;
     }
 
-    /* Print links */
     a[href^="http"]::after {
         content: " (" attr(href) ")";
         font-size: 9pt;
@@ -1383,7 +1475,6 @@ section {
         content: " (" attr(href) ")";
     }
 
-    /* Footer for print */
     .footer {
         border-top: 2px solid #000;
         padding: 0.5rem 0;
